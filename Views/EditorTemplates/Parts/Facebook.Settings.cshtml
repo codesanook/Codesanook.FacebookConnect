@@ -1,0 +1,28 @@
+﻿@model CodeSanook.FacebookConnect.Models.FacebookConnectSettingsPart
+<fieldset>
+    <legend>@T("<u><b>Facebook Application Settings</b></u>")</legend>
+    <div>
+        @Html.LabelFor(m => m.FacebookAppId)
+        @Html.EditorFor(m => m.FacebookAppId)
+        @Html.ValidationMessageFor(m => m.FacebookAppId, "*")
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.AwsAccessKeyId)
+        @Html.EditorFor(m => m.AwsAccessKeyId)
+        @Html.ValidationMessageFor(m => m.AwsAccessKeyId, "*")
+    </div>
+
+
+    <div>
+        @Html.LabelFor(m => m.AwsSecretAccesskey)
+        @Html.EditorFor(m => m.AwsSecretAccesskey)
+        @Html.ValidationMessageFor(m => m.AwsSecretAccesskey, "*")
+    </div>
+
+    <div>
+        @Html.LabelFor(m => m.S3BucketName)
+        @Html.EditorFor(m => m.S3BucketName)
+        @Html.ValidationMessageFor(m => m.S3BucketName, "*")
+    </div>
+</fieldset>

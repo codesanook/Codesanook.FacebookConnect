@@ -1,0 +1,12 @@
+Name: CodeSanook.FacebookConnect
+AntiForgery: enabled
+Author: Aaron
+Website: http://codesanook.com
+Version: 0.5
+OrchardVersion: 1.0
+Description: Description for the module
+Features:
+    CodeSanook.FacebookConnect:
+        Description: Allows connecting account with Facebook.
+        Dependencies: Orchard.Users
+		Category: (Social Volunteer-ism 2.0)

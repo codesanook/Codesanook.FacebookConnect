@@ -1,0 +1,34 @@
+﻿@using Orchard.ContentManagement
+@using CodeSanook.FacebookConnect.Models
+
+@{
+    //add style sheet
+    Style.Include("facebookConnectStyle.css").AtHead();
+
+    //add javascript
+    Script.Require("jQuery").AtHead();
+    Script.Require("AngularJs").AtHead();
+
+    Script.Include("sprintf.js").AtHead();
+    Script.Include("facebookConnect.js").AtHead();//with name and path
+    Script.Include("facebookLogInController.js").AtHead();//with name and path
+    Script.Include("facebookService.js").AtHead();//with name and path
+
+    //dynamic add shape template and its model
+    var setting = WorkContext.CurrentSite.As<FacebookConnectSettingsPart>();
+    WorkContext.Layout.AfterBody.Add(
+        New.FacebookSdk(Setting: setting), "1");
+}
+
+@if (WorkContext.CurrentUser != null)
+{
+    <h1>@T("Hello {0}", WorkContext.CurrentUser.UserName)</h1>
+}
+else
+{
+    <div ng-app="facebookConnect">
+        <div ng-controller="facebookLogInController as vm">
+            <a ng-click="vm.logIn()" href="">Log In with facebook</a>
+        </div>
+    </div>
+}
