@@ -136,7 +136,6 @@
     <Content Include="Scripts\sprintf.js" />
     <Content Include="Styles\facebookConnectStyle.css" />
     <Content Include="Styles\hello.css" />
-    <Content Include="Views\Web.config" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
@@ -144,14 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\FacebookController.cs" />
-    <Compile Include="Models\FacebookConnectSettingsPartRecord.cs" />
     <Compile Include="Models\FacebookLogInRequest.cs" />
-    <Compile Include="Drivers\FacebookSettingsPartDriver.cs" />
     <Compile Include="Handlers\FacebookUserPartHandler.cs" />
-    <Compile Include="Handlers\FacebookSettingsPartHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="MissingSettingsBanner.cs" />
-    <Compile Include="Models\FacebookConnectSettingsPart.cs" />
     <Compile Include="Models\FacebookUserPart.cs" />
     <Compile Include="Models\FacebookUserPartRecord.cs" />
     <Compile Include="Permissions.cs" />
@@ -160,9 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\FacebookSdk.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Facebook.Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">
@@ -203,6 +194,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Drivers\" />
+    <Folder Include="Views\EditorTemplates\Parts\" />
     <Folder Include="Views\Parts\" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +206,10 @@
     <ProjectReference Include="..\..\Core\Orchard.Core.csproj">
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeSanook.Configuration\CodeSanook.Configuration.csproj">
+      <Project>{55a5af31-438d-4712-b8b6-ee01327842ae}</Project>
+      <Name>CodeSanook.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>

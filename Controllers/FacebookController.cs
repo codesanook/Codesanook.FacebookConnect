@@ -20,6 +20,7 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using System.Threading.Tasks;
 using CodeSanook.FacebookConnect.Models;
+using CodeSanook.Configuration.Models;
 
 namespace CodeSanook.FacebookConnect.Controllers
 {
@@ -30,7 +31,7 @@ namespace CodeSanook.FacebookConnect.Controllers
         private readonly IAuthenticationService auth;
         private readonly IMembershipService membershipService;
         private readonly IUserEventHandler userEventHandler;
-        private FacebookConnectSettingsPart settings;
+        private CodeSanookModuleSettingPart settings;
 
         //property injection
         public ILogger Logger { get; set; }
@@ -51,7 +52,7 @@ namespace CodeSanook.FacebookConnect.Controllers
             T = NullLocalizer.Instance;
 
             // Acquire Facebook settings
-            settings = orchardService.WorkContext.CurrentSite.As<FacebookConnectSettingsPart>();
+            settings = orchardService.WorkContext.CurrentSite.As<CodeSanookModuleSettingPart>();
         }
 
 
@@ -169,15 +170,15 @@ namespace CodeSanook.FacebookConnect.Controllers
             }
 
             using (var client = new AmazonS3Client(
-                settings.AwsAccessKeyId,
-                settings.AwsSecretAccesskey,
+                settings.AwsAccessKey,
+                settings.AwsSecretKey,
                 Amazon.RegionEndpoint.APSoutheast1))
             using (memoryStream)
             {
 
                 var putRequest = new PutObjectRequest
                 {
-                    BucketName = settings.S3BucketName,
+                    BucketName = settings.AwsS3BucketName,
                     InputStream = memoryStream,
                     StorageClass = S3StorageClass.ReducedRedundancy,
                     ContentType = "image/jpg",
@@ -188,7 +189,7 @@ namespace CodeSanook.FacebookConnect.Controllers
                 putRequest.Key = fileFullName;
 
                 await client.PutObjectAsync(putRequest);
-                return $"https://s3-ap-southeast-1.amazonaws.com/{settings.S3BucketName}/{fileFullName}";
+                return $"https://s3-ap-southeast-1.amazonaws.com/{settings.AwsS3BucketName}/{fileFullName}";
             }
         }
 

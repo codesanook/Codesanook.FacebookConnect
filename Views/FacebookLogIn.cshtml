@@ -1,5 +1,5 @@
 ﻿@using Orchard.ContentManagement
-@using CodeSanook.FacebookConnect.Models
+@using CodeSanook.Configuration.Models
 
 @{
     //add style sheet
@@ -15,7 +15,7 @@
     Script.Include("facebookService.js").AtHead();//with name and path
 
     //dynamic add shape template and its model
-    var setting = WorkContext.CurrentSite.As<FacebookConnectSettingsPart>();
+    var setting = WorkContext.CurrentSite.As<CodeSanookModuleSettingPart>();
     WorkContext.Layout.AfterBody.Add(
         New.FacebookSdk(Setting: setting), "1");
 }

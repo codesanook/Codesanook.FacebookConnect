@@ -7,15 +7,6 @@ namespace CodeSanook.FacebookConnect
 
         public int Create() {
 
-            //create table for a setting record 
-            SchemaBuilder.CreateTable("FacebookConnectSettingsPartRecord",
-                table => table
-                .ContentPartRecord()
-                .Column<string>("FacebookAppId", c => c.Unlimited())
-                .Column<string>("AwsAccessKeyId", c => c.Unlimited())
-                .Column<string>("AwsSecretAccesskey", c => c.Unlimited())
-                .Column<string>("S3BucketName", c => c.Unlimited()));
-
             //create a table for FacebookUserPart record
             SchemaBuilder.CreateTable("FacebookUserPartRecord",
                 table => table.ContentPartRecord()

@@ -1,6 +1,7 @@
 ﻿@using CodeSanook.FacebookConnect.Models
+@using CodeSanook.Configuration.Models;
 @{
-    var setting = Model.Setting as FacebookConnectSettingsPart;
+    var setting = WorkContext.CurrentSite.As<CodeSanookModuleSettingPart>();
 }
 
 <script type="text/javascript">
