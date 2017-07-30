@@ -15,7 +15,7 @@
     Script.Include("facebookService.js").AtHead();//with name and path
 
     //dynamic add shape template and its model
-    var setting = WorkContext.CurrentSite.As<CodeSanookModuleSettingPart>();
+    var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
     WorkContext.Layout.AfterBody.Add(
         New.FacebookSdk(Setting: setting), "1");
 }

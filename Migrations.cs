@@ -14,11 +14,6 @@ namespace CodeSanook.FacebookConnect
                 .Column<string>("LastName")
                 .Column<string>("ProfilePictureUrl")
                 );
-
-            //alter User content type to attach FacebookUserPart
-            ContentDefinitionManager.AlterTypeDefinition("User",
-                cfg => cfg .WithPart("FacebookUserPart"));
-
             return 1;
         }
 

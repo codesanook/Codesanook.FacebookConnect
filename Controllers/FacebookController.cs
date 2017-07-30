@@ -31,7 +31,8 @@ namespace CodeSanook.FacebookConnect.Controllers
         private readonly IAuthenticationService auth;
         private readonly IMembershipService membershipService;
         private readonly IUserEventHandler userEventHandler;
-        private CodeSanookModuleSettingPart settings;
+        private ModuleSettingPart settings;
+        private IContentManager contentManager;
 
         //property injection
         public ILogger Logger { get; set; }
@@ -41,21 +42,21 @@ namespace CodeSanook.FacebookConnect.Controllers
             IOrchardServices orchardService,
             IAuthenticationService auth,
             IMembershipService membershipService,
-            IUserEventHandler userEventHandler)
+            IUserEventHandler userEventHandler,
+            IContentManager contentManager)
         {
             this.orchardService = orchardService;
             this.auth = auth;
             this.membershipService = membershipService;
             this.userEventHandler = userEventHandler;
+            this.contentManager = contentManager;
 
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
 
             // Acquire Facebook settings
-            settings = orchardService.WorkContext.CurrentSite.As<CodeSanookModuleSettingPart>();
+            settings = orchardService.WorkContext.CurrentSite.As<ModuleSettingPart>();
         }
-
-
 
         [AlwaysAccessible]
         public ActionResult Connect(string returnUrl)
@@ -107,10 +108,11 @@ namespace CodeSanook.FacebookConnect.Controllers
 
         private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user)
         {
-            //update username
-            var userPart = user.ContentItem.As<UserPart>();
+            //update UserPart  
+            var userPart = user.ContentItem.As<UserPart>(); 
             userPart.UserName = request.FirstName;
             userPart.NormalizedUserName = userPart.UserName.ToLowerInvariant();
+
             //update user Facebook profile 
             var facebookUser = user.ContentItem.As<FacebookUserPart>();
             facebookUser.FirstName = request.FirstName;
@@ -192,7 +194,5 @@ namespace CodeSanook.FacebookConnect.Controllers
                 return $"https://s3-ap-southeast-1.amazonaws.com/{settings.AwsS3BucketName}/{fileFullName}";
             }
         }
-
-
     }
 }
