@@ -21,6 +21,7 @@ using Amazon.S3.Model;
 using System.Threading.Tasks;
 using CodeSanook.FacebookConnect.Models;
 using CodeSanook.Configuration.Models;
+using url = Flurl.Url;
 
 namespace CodeSanook.FacebookConnect.Controllers
 {
@@ -109,7 +110,7 @@ namespace CodeSanook.FacebookConnect.Controllers
         private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user)
         {
             //update UserPart  
-            var userPart = user.ContentItem.As<UserPart>(); 
+            var userPart = user.ContentItem.As<UserPart>();
             userPart.UserName = request.FirstName;
             userPart.NormalizedUserName = userPart.UserName.ToLowerInvariant();
 
@@ -161,7 +162,10 @@ namespace CodeSanook.FacebookConnect.Controllers
 
             var now = DateTime.UtcNow;
             var fileName = $"file-{now.ToString("yyyy-MM-dd-HH-mm-ss")}-{Guid.NewGuid()}{fileExtension}";
-            var fileFullName = $"uploaded/{now.ToString("yyyy/MM/dd/HH")}/{fileName}";
+            var fileFullName = url.Combine(
+                "uploaded",
+                now.ToString("yyyy/MM/dd/HH"),
+                fileName);
 
             MemoryStream memoryStream;
             using (var webClient = new WebClient())
@@ -177,12 +181,12 @@ namespace CodeSanook.FacebookConnect.Controllers
                 Amazon.RegionEndpoint.APSoutheast1))
             using (memoryStream)
             {
-
                 var putRequest = new PutObjectRequest
                 {
                     BucketName = settings.AwsS3BucketName,
                     InputStream = memoryStream,
                     StorageClass = S3StorageClass.ReducedRedundancy,
+                    //todo dynamic content type
                     ContentType = "image/jpg",
                     CannedACL = S3CannedACL.PublicRead
                 };
@@ -191,7 +195,10 @@ namespace CodeSanook.FacebookConnect.Controllers
                 putRequest.Key = fileFullName;
 
                 await client.PutObjectAsync(putRequest);
-                return $"https://s3-ap-southeast-1.amazonaws.com/{settings.AwsS3BucketName}/{fileFullName}";
+                return url.Combine(
+                    settings.AwsS3PublicUrl,
+                    settings.AwsS3BucketName,
+                    fileFullName);
             }
         }
     }
