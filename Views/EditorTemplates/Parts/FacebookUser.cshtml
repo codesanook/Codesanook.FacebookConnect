@@ -1,0 +1,8 @@
+﻿@model CodeSanook.FacebookConnect.Models.FacebookUserPart
+<fieldset>
+    <div>
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName)
+        @Html.ValidationMessageFor(m => m.FirstName, "*")
+    </div>
+</fieldset>

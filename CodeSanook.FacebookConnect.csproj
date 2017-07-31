@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\FacebookController.cs" />
+    <Compile Include="Drivers\FacebookUserPartDriver.cs" />
     <Compile Include="Models\FacebookLogInRequest.cs" />
     <Compile Include="Handlers\FacebookUserPartHandler.cs" />
     <Compile Include="Migrations.cs" />
@@ -168,6 +169,8 @@
     <Content Include="Views\FacebookLogIn.cshtml" />
     <Content Include="sass-watch.bat" />
     <Content Include="Scss\hello.scss" />
+    <Content Include="Views\Parts\FacebookUser.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts\FacebookUser.cshtml" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -193,11 +196,7 @@
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drivers\" />
-    <Folder Include="Views\EditorTemplates\Parts\" />
-    <Folder Include="Views\Parts\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>

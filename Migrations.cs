@@ -12,8 +12,11 @@ namespace CodeSanook.FacebookConnect
                 table => table.ContentPartRecord()
                 .Column<string>("FirstName")
                 .Column<string>("LastName")
-                .Column<string>("ProfilePictureUrl")
-                );
+                .Column<string>("ProfilePictureUrl"));
+
+            ContentDefinitionManager.AlterTypeDefinition("User",
+                cfg => cfg.WithPart("FacebookUserPart"));
+
             return 1;
         }
 
