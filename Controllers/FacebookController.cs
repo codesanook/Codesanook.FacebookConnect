@@ -109,6 +109,10 @@ namespace CodeSanook.FacebookConnect.Controllers
 
         private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user)
         {
+            var newUser = contentManager.New("User");
+            var part = newUser.As<FacebookUserPart>();
+
+
             //update UserPart  
             var userPart = user.ContentItem.As<UserPart>();
             userPart.UserName = request.FirstName;
