@@ -22,14 +22,18 @@
     }
 
     class FacebookLogInController extends ControllerBase {
-
         userName = "";
         isLogIn = false;
+        returnUrl = "";
 
         constructor(
             private facebookService: Services.FacebookService,
             private $q: ng.IQService) {
             super();
+        }
+        
+        init(returnUrl:string):void{
+            console.log("returnUrl %s", returnUrl);
         }
 
         logIn() {

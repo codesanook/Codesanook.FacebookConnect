@@ -65,7 +65,7 @@ namespace CodeSanook.FacebookConnect.Controllers
             if (auth.GetAuthenticatedUser() != null)
                 return this.RedirectLocal(returnUrl);
 
-            var shape = orchardService.New.FacebookLogIn().Title(T("Log On").Text);
+            var shape = orchardService.New.FacebookLogIn(Title: T("Log On").Text, ReturnUrl: returnUrl);
             return new ShapeResult(this, shape);
         }
 

@@ -27,7 +27,7 @@
 else
 {
     <div ng-app="facebookConnect">
-        <div ng-controller="facebookLogInController as vm">
+        <div ng-controller="facebookLogInController as vm" ng-init="init('@Model.ReturnUrl')">
             <a ng-click="vm.logIn()" href="">Log In with facebook</a>
         </div>
     </div>

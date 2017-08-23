@@ -28,6 +28,9 @@ var App;
                 this.userName = "";
                 this.isLogIn = false;
             }
+            init(returnUrl) {
+                console.log("returnUrl %s", returnUrl);
+            }
             logIn() {
                 console.log("log in called");
                 return this.facebookService.logIn()
