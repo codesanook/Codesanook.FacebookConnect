@@ -21,15 +21,19 @@ var App;
         }
         Contorllers.ControllerBase = ControllerBase;
         class FacebookLogInController extends ControllerBase {
-            constructor(facebookService, $q) {
+            constructor(facebookService, $q, $scope) {
                 super();
                 this.facebookService = facebookService;
                 this.$q = $q;
+                this.$scope = $scope;
                 this.userName = "";
                 this.isLogIn = false;
-            }
-            init(returnUrl) {
-                console.log("returnUrl %s", returnUrl);
+                this.returnUrl = null;
+                this.scope = $scope;
+                this.scope.init = (returnUrl) => {
+                    this.returnUrl = returnUrl;
+                    console.log("returnUrl %s", this.returnUrl);
+                };
             }
             logIn() {
                 console.log("log in called");
@@ -43,7 +47,12 @@ var App;
                 })
                     .then((response) => {
                     this.isLogIn = true;
-                    this.redirect("/");
+                    if (this.returnUrl) {
+                        this.redirect(this.returnUrl);
+                    }
+                    else {
+                        this.redirect("/");
+                    }
                 })
                     .catch((response) => {
                     this.handleException(response);
@@ -68,6 +77,6 @@ var App;
             }
         }
         angular.module("facebookConnect")
-            .controller("facebookLogInController", ["facebookService", "$q", FacebookLogInController]);
+            .controller("facebookLogInController", ["facebookService", "$q", "$scope", FacebookLogInController]);
     })(Contorllers = App.Contorllers || (App.Contorllers = {}));
 })(App || (App = {}));

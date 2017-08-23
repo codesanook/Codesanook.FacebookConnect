@@ -24,18 +24,23 @@
     class FacebookLogInController extends ControllerBase {
         userName = "";
         isLogIn = false;
-        returnUrl = "";
+        scope:any;   
+        returnUrl:string = null; 
 
         constructor(
             private facebookService: Services.FacebookService,
-            private $q: ng.IQService) {
+            private $q: ng.IQService,
+            private $scope: any){
+
             super();
+            this.scope = $scope;
+
+            this.scope.init = (returnUrl:string):void =>{
+                this.returnUrl = returnUrl
+                console.log("returnUrl %s", this.returnUrl);
+            }
         }
         
-        init(returnUrl:string):void{
-            console.log("returnUrl %s", returnUrl);
-        }
-
         logIn() {
             console.log("log in called");
 
@@ -50,9 +55,13 @@
                     return this.facebookService.connect(userInfo);
                 })
                 .then((response: any) => {
-                    //action after  logged in successfully
+                    //action after logged in successfully
                     this.isLogIn = true;
-                    this.redirect("/");
+                    if(this.returnUrl){
+                        this.redirect(this.returnUrl);
+                    }else{
+                        this.redirect("/");
+                    }
                 })
                 .catch((response: any) => {
                     this.handleException(response);
@@ -81,6 +90,6 @@
     //register controller to module
     angular.module("facebookConnect")
         .controller("facebookLogInController",
-        ["facebookService", "$q", FacebookLogInController]);
+        ["facebookService", "$q", "$scope", FacebookLogInController]);
 
 }
