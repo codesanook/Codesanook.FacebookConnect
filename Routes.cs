@@ -19,8 +19,9 @@ namespace CodeSanook.FacebookConnect
         public IEnumerable<RouteDescriptor> GetRoutes()
         {
             return new[] {
-                new RouteDescriptor {
 
+                new RouteDescriptor {
+                    Name = "LogInWithFacebook",
                     Priority = 100,
                     Route = new Route(
                         "Users/Account/LogOn",
@@ -34,7 +35,9 @@ namespace CodeSanook.FacebookConnect
                             {"area", "CodeSanook.FacebookConnect"}
                         },
                         new MvcRouteHandler())
-                }, new RouteDescriptor {
+                },
+
+                new RouteDescriptor {
                     Priority = 9,
                     Route = new Route(
                         "facebook/connect",
