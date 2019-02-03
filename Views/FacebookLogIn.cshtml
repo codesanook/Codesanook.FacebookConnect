@@ -3,22 +3,30 @@
 
 @{
     //add style sheet
-    Style.Include("facebookConnectStyle.css").AtHead();
+    Style.Include("facebook-connect-style.css").AtHead();
 
-    //add javascript
+    //add  JavaScript
     Script.Require("jQuery").AtHead();
     Script.Require("AngularJs").AtHead();
 
-    Script.Include("sprintf.js").AtHead();
-    Script.Include("facebookConnect.js").AtHead();//with name and path
-    Script.Include("facebookLogInController.js").AtHead();//with name and path
-    Script.Include("facebookService.js").AtHead();//with name and path
+    //TODO will update with codesanook.common to get require version
+    Script.Include("system.js").AtHead();
 
-    //dynamic add shape template and its model
+    //dynamic add shape template and its model for Facebook SDK
     var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
-    WorkContext.Layout.AfterBody.Add(
-        New.FacebookSdk(Setting: setting), "1");
+    WorkContext.Layout.AfterBody.Add(New.FacebookSdk(Setting: setting), "1");
 }
+<script>
+    System.config({
+        packages: {
+            '': {
+                defaultExtension: 'js' //default extension for all packages
+            }
+        }
+    });
+    //import main JavaScript
+    System.import("/Modules/CodeSanook.FacebookConnect/Scripts/App");
+</script>
 
 @if (WorkContext.CurrentUser != null)
 {
@@ -26,9 +34,10 @@
 }
 else
 {
-    <div ng-app="facebookConnect">
-        <div ng-controller="facebookLogInController as vm" ng-init="init('@Model.ReturnUrl')">
-            <a ng-click="vm.logIn()" href="">Log In with facebook</a>
-        </div>
+    <div class="facebook-connect-app" ng-controller="facebookLogInController as ctrl"
+         ng-init="ctrl.init('@Model.ReturnUrl')">
+        <a ng-click="ctrl.logIn()" href="">
+            Log In with Facebook
+        </a>
     </div>
 }

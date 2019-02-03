@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var facebookLogInController_1 = require("./controllers/facebookLogInController");
+var facebookService_1 = require("./services/facebookService");
+var moduleName = "facebookConnect";
+var module = angular.module(moduleName, []);
+module.controller("facebookLogInController", facebookLogInController_1.default);
+module.service("facebookService", facebookService_1.default);
+var rootElement = angular.element(".facebook-connect-app").get(0);
+angular.bootstrap(rootElement, [moduleName]);
