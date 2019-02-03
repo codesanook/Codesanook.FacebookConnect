@@ -12,10 +12,16 @@
     //TODO will update with codesanook.common to get require version
     Script.Include("system.js").AtHead();
 
-    //dynamic add shape template and its model for Facebook SDK
-    var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
-    WorkContext.Layout.AfterBody.Add(New.FacebookSdk(Setting: setting), "1");
+    //dynamic add shape template and its model for Facebook SDK if not exist
+    var shapeItems = WorkContext.Layout.AfterBody.Items as IEnumerable<dynamic>;
+    var doesSdkShapeExist = shapeItems.Any(item => item.Metadata.Type == "FacebookSdk");
+    if (!doesSdkShapeExist)
+    {
+        var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
+        WorkContext.Layout.AfterBody.Add(New.FacebookSdk(Setting: setting), "1");
+    }
 }
+
 <script>
     System.config({
         packages: {
