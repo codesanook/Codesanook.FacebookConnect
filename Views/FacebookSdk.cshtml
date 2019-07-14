@@ -1,22 +1,18 @@
-﻿@using CodeSanook.Configuration.Models;
+﻿@using Codesanook.Configuration.Models;
 @{
-    var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
+    var setting = Model.Setting as ModuleSettingPart;
 }
 
 <script type="text/javascript">
 
-    Setting = {};
-    Setting.facebookAppId = @setting.FacebookAppId;
-
     window.fbAsyncInit = function () {
         FB.init({
-            appId: Setting.facebookAppId,//test
+            appId: @setting.FacebookAppId,//test
             cookie: true,  // enable cookies to allow the server to access the session
             xfbml: true,  // parse social plug ins on this page
             version: 'v2.4'
         });
         // Additional initialization code here
-        $(document).triggerHandler('fbLoaded', ["Facebook SDK loaded"]);
     };
 
     (function (d, s, id) {
@@ -29,4 +25,4 @@
         js.src = "//connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-</script> 
+</script>

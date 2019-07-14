@@ -3,28 +3,24 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Orchard.Mvc.Routes;
 
-namespace CodeSanook.FacebookConnect
-{
-    public class Routes : IRouteProvider
-    {
+namespace Codesanook.FacebookConnect {
+    public class Routes : IRouteProvider {
 
-        public void GetRoutes(ICollection<RouteDescriptor> routes)
-        {
-            foreach (var routeDescriptor in GetRoutes())
-            {
+        public void GetRoutes(ICollection<RouteDescriptor> routes) {
+
+            foreach (var routeDescriptor in GetRoutes()) {
                 routes.Add(routeDescriptor);
             }
         }
 
-        public IEnumerable<RouteDescriptor> GetRoutes()
-        {
+        public IEnumerable<RouteDescriptor> GetRoutes() {
             return new[] {
-
+                //Override existing action method
                 new RouteDescriptor {
                     Name = "LogInWithFacebook",
                     Priority = 100,
                     Route = new Route(
-                        "Users/Account/LogOn",
+                        "users/account/logon",
                         new RouteValueDictionary {
                             {"area", "CodeSanook.FacebookConnect"},
                             {"controller", "Facebook"},
@@ -37,8 +33,9 @@ namespace CodeSanook.FacebookConnect
                         new MvcRouteHandler())
                 },
 
+                // Make friendly URL 
                 new RouteDescriptor {
-                    Priority = 9,
+                    Priority = 100,
                     Route = new Route(
                         "facebook/connect",
                         new RouteValueDictionary {

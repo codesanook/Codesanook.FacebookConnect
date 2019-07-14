@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 
-namespace CodeSanook.FacebookConnect.Models
-{
+namespace Codesanook.FacebookConnect.Models {
     public class FacebookUserPart : ContentPart<FacebookUserPartRecord>
     {
-
         public string FirstName
         {
             get { return Record.FirstName; }

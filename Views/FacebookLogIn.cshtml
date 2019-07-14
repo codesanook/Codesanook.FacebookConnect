@@ -1,18 +1,12 @@
 ﻿@using Orchard.ContentManagement
-@using CodeSanook.Configuration.Models
+@using Codesanook.Configuration.Models
 
 @{
-    //add style sheet
-    Style.Include("facebook-connect-style.css").AtHead();
+    Script.Require("React").AtHead();
+    Script.Require("ReactDOM").AtHead();
+    Script.Include("main-bundle.js").AtHead();
 
-    //add  JavaScript
-    Script.Require("jQuery").AtHead();
-    Script.Require("AngularJs").AtHead();
-
-    //TODO will update with codesanook.common to get require version
-    Script.Include("system.js").AtHead();
-
-    //dynamic add shape template and its model for Facebook SDK if not exist
+    // Dynamic add shape template and its shape model for Facebook SDK if not exist
     var shapeItems = WorkContext.Layout.AfterBody.Items as IEnumerable<dynamic>;
     var doesSdkShapeExist = shapeItems.Any(item => item.Metadata.Type == "FacebookSdk");
     if (!doesSdkShapeExist)
@@ -22,28 +16,4 @@
     }
 }
 
-<script>
-    System.config({
-        packages: {
-            '': {
-                defaultExtension: 'js' //default extension for all packages
-            }
-        }
-    });
-    //import main JavaScript
-    System.import("/Modules/CodeSanook.FacebookConnect/Scripts/App");
-</script>
-
-@if (WorkContext.CurrentUser != null)
-{
-    <h1>@T("Hello {0}", WorkContext.CurrentUser.UserName)</h1>
-}
-else
-{
-    <div class="facebook-connect-app" ng-controller="facebookLogInController as ctrl"
-         ng-init="ctrl.init('@Model.ReturnUrl')">
-        <a ng-click="ctrl.logIn()" href="">
-            Log In with Facebook
-        </a>
-    </div>
-}
+@Html.React("CodesanookFacebookConnect.FacebookLogIn", new { returnUrlRelativeToRoot = Request.QueryString["returnUrl"] })

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Orchard.Environment.Extensions.Models;
 using Orchard.Security.Permissions;
 
-namespace CodeSanook.FacebookConnect
+namespace Codesanook.FacebookConnect
 {
     [UsedImplicitly]
     public class Permissions : IPermissionProvider

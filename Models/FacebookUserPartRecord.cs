@@ -1,6 +1,6 @@
 ﻿using Orchard.ContentManagement.Records;
 
-namespace CodeSanook.FacebookConnect.Models
+namespace Codesanook.FacebookConnect.Models
 {
     public class FacebookUserPartRecord : ContentPartRecord
     {

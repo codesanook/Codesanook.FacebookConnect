@@ -1,12 +1,9 @@
 using Orchard.ContentManagement.MetaData;
 using Orchard.Data.Migration;
 
-namespace CodeSanook.FacebookConnect
-{
+namespace Codesanook.FacebookConnect {
     public class Migrations : DataMigrationImpl {
-
         public int Create() {
-
             //create a table for FacebookUserPart record
             SchemaBuilder.CreateTable("FacebookUserPartRecord",
                 table => table.ContentPartRecord()
@@ -19,6 +16,5 @@ namespace CodeSanook.FacebookConnect
 
             return 1;
         }
-
     }
 }

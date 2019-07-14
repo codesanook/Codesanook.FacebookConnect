@@ -19,15 +19,13 @@ using System.Net;
 using Amazon.S3;
 using Amazon.S3.Model;
 using System.Threading.Tasks;
-using CodeSanook.FacebookConnect.Models;
-using CodeSanook.Configuration.Models;
+using Codesanook.FacebookConnect.Models;
+using Codesanook.Configuration.Models;
 using url = Flurl.Url;
 
-namespace CodeSanook.FacebookConnect.Controllers
-{
-    [HandleError, Themed]
-    public class FacebookController : Controller
-    {
+namespace Codesanook.FacebookConnect.Controllers {
+    [HandleError, Themed, AlwaysAccessible]
+    public class FacebookController : Controller {
         private readonly IOrchardServices orchardService;
         private readonly IAuthenticationService auth;
         private readonly IMembershipService membershipService;
@@ -44,8 +42,7 @@ namespace CodeSanook.FacebookConnect.Controllers
             IAuthenticationService auth,
             IMembershipService membershipService,
             IUserEventHandler userEventHandler,
-            IContentManager contentManager)
-        {
+            IContentManager contentManager) {
             this.orchardService = orchardService;
             this.auth = auth;
             this.membershipService = membershipService;
@@ -59,66 +56,72 @@ namespace CodeSanook.FacebookConnect.Controllers
             settings = orchardService.WorkContext.CurrentSite.As<ModuleSettingPart>();
         }
 
-        [AlwaysAccessible]
-        public ActionResult Connect(string returnUrl)
-        {
-            if (auth.GetAuthenticatedUser() != null)
+        public ActionResult Connect(string returnUrl) {
+            if (auth.GetAuthenticatedUser() != null) {
                 return this.RedirectLocal(returnUrl);
+            }
 
+            // Return shape from the controller
             var shape = orchardService.New.FacebookLogIn(Title: T("Log On").Text, ReturnUrl: returnUrl);
             return new ShapeResult(this, shape);
         }
 
-        [AlwaysAccessible]
         [HttpPost]
-        public async Task<ActionResult> Connect(FacebookLogInRequest request, FormCollection form)
-        {
-            //todo better error response to client to show why we have error
-            ValidateAccessToken(request);
+        public async Task<ActionResult> Connect(FacebookLogInRequest request, FormCollection form) {
 
-            // If already logged in update the account info
-            var user = auth.GetAuthenticatedUser();
-            if (user == null)
-            {
-                //If user does not log in and create if user does not exist in database
-                user = orchardService.ContentManager.Query<UserPart, UserPartRecord>()
-                   .Where<UserPartRecord>(x => x.Email == request.Email)
-                   .List<IUser>()
-                   .SingleOrDefault();
-
-                if (user == null)
-                {
-                    var userParam = new CreateUserParams(
-                        request.FirstName,
-                        GeneratePassword(8),
-                        request.Email,
-                        null, null, true);
-                    user = membershipService.CreateUser(userParam);
-                }
+            // TODO better error response to client to show why we have error
+            ValidateFacebookAccessToken(request);
+            var user = GetUser(request);
+            if (user == null) {
+                user = CreateNewUser(request);
             }
 
-            //always update profile
+            // Always update profile if user make a request to connect because we have chance to get new Facebook information
             user = await UpdateFacebookUserPart(request, user);
-            //sign in
+            // Server side sign in
             auth.SignIn(user, true);
-
-            //update last log in, to make cookie valid
+            // Update last log in, to make valid cookie to client side
             userEventHandler.LoggedIn(user);
             return new JsonResult();
         }
 
-        private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user)
-        {
+        private IUser GetUser(FacebookLogInRequest request) {
+            var user = auth.GetAuthenticatedUser();
+            // If user already logged in return existing user
+            if (user != null) return user;
+
+            user = orchardService.ContentManager.Query<UserPart, UserPartRecord>()
+               .Where<UserPartRecord>(x => x.Email == request.Email)
+               .List<IUser>()
+               .SingleOrDefault();
+            // If user has not logged in return existing user
+            if (user != null) return user;
+
+            return null;
+        }
+
+        private IUser CreateNewUser(FacebookLogInRequest request) {
+            var userParam = new CreateUserParams(
+                request.FirstName,
+                GeneratePassword(8),
+                request.Email,
+                null,
+                null,
+                true
+            );
+            return membershipService.CreateUser(userParam);
+        }
+
+        private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user) {
             var newUser = contentManager.New("User");
             var part = newUser.As<FacebookUserPart>();
 
-
-            //update UserPart  
+            // Update UserPart  
             var userPart = user.ContentItem.As<UserPart>();
             userPart.UserName = request.FirstName;
             userPart.NormalizedUserName = userPart.UserName.ToLowerInvariant();
 
-            //update user Facebook profile 
+            // Update user Facebook profile 
             var facebookUser = user.ContentItem.As<FacebookUserPart>();
             facebookUser.FirstName = request.FirstName;
             facebookUser.LastName = request.LastName;
@@ -127,21 +130,18 @@ namespace CodeSanook.FacebookConnect.Controllers
             return updatedUser;
         }
 
-        private static void ValidateAccessToken(FacebookLogInRequest request)
-        {
+        private static void ValidateFacebookAccessToken(FacebookLogInRequest request) {
             var client = new FacebookClient(request.FacebookAccessToken);
             //https://developers.facebook.com/tools/explorer/?method=GET&path=me%3Ffields%3Dpicture.width(200).height(200)%2Cemail&version=v2.9
             var query = "me?fields=picture.height(200).width(200),email,first_name,last_name";
             dynamic queryResult = client.Get(query);
             if (request.FacebookAppScopeUserId != Convert.ToInt64(queryResult.id) ||
-                request.Email != (string)queryResult.email)
-            {
+                request.Email != (string)queryResult.email) {
                 throw new InvalidOperationException("invalid Facebook access token");
             }
         }
 
-        public static string GeneratePassword(int resetPasswordLength)
-        {
+        public static string GeneratePassword(int resetPasswordLength) {
             // Create an array of characters to user for password reset.
             // Exclude confusing or ambiguous characters such as 1 0 l o i
             var characters = new[] { "2", "3", "4", "5", "6", "7", "8",
@@ -151,16 +151,14 @@ namespace CodeSanook.FacebookConnect.Controllers
             var newPassword = new StringBuilder();
             var rnd = new Random();
 
-            for (var index = 0; index < resetPasswordLength; index++)
-            {
+            for (var index = 0; index < resetPasswordLength; index++) {
                 newPassword.Append(characters[rnd.Next(characters.Length)]);
             }
             return newPassword.ToString();
         }
 
-        private async Task<string> UploadProfileImage(FacebookLogInRequest request)
-        {
-            //remove query string path
+        private async Task<string> UploadProfileImage(FacebookLogInRequest request) {
+            // Remove query string path
             var pathWithOutQueryString = Regex.Replace(request.ProfilePictureUrl, @"\?.*", "");
             var fileExtension = Path.GetExtension(pathWithOutQueryString);
 
@@ -172,8 +170,7 @@ namespace CodeSanook.FacebookConnect.Controllers
                 fileName);
 
             MemoryStream memoryStream;
-            using (var webClient = new WebClient())
-            {
+            using (var webClient = new WebClient()) {
                 var fileData = await webClient
                     .DownloadDataTaskAsync(request.ProfilePictureUrl);
                 memoryStream = new MemoryStream(fileData);
@@ -183,10 +180,8 @@ namespace CodeSanook.FacebookConnect.Controllers
                 settings.AwsAccessKey,
                 settings.AwsSecretKey,
                 Amazon.RegionEndpoint.APSoutheast1))
-            using (memoryStream)
-            {
-                var putRequest = new PutObjectRequest
-                {
+            using (memoryStream) {
+                var putRequest = new PutObjectRequest {
                     BucketName = settings.AwsS3BucketName,
                     InputStream = memoryStream,
                     StorageClass = S3StorageClass.ReducedRedundancy,

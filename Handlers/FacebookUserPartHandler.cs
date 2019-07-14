@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Data;
-using CodeSanook.FacebookConnect.Models;
+using Codesanook.FacebookConnect.Models;
 
-namespace CodeSanook.FacebookConnect.Handlers
+namespace Codesanook.FacebookConnect.Handlers
 {
     public class FacebookUserPartHandler : ContentHandler
     {

@@ -1,17 +1,24 @@
-﻿{
+{
     "compilerOptions": {
-        "target": "es5",
-        "module": "es6",
-        "moduleResolution": "node",
-        "lib": ["es6", "dom"],
-        "sourceMap": true,
-        "jsx": "react",
-        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "rootDir": "scripts",
-        "outDir": "scripts"
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": true,
+        "target": "es2015",
+        "module": "es2015",
+        "strict": false,
+        "jsx": "react"
     },
-    "include": ["scripts/**/*.ts"],
-    "exclude": ["node_modules"],
+    "include": [
+        "src/**/*.js",
+        "src/components/FacebookLogIn.tsx"
+    ],
+    "exclude": [
+        "node_modules",
+    ],
     "compileOnSave": false
 }

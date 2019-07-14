@@ -1,6 +1,6 @@
 ﻿using Orchard.UI.Resources;
 
-namespace CodeSanook.FacebookConnect {
+namespace Codesanook.FacebookConnect {
     public class ResourceRegistration: IResourceManifestProvider  {
         public void BuildManifests(ResourceManifestBuilder builder) {
             var manifest = builder.Add();
