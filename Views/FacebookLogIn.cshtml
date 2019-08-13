@@ -4,7 +4,7 @@
 @{
     Script.Require("React").AtHead();
     Script.Require("ReactDOM").AtHead();
-    Script.Include("main-bundle.js").AtHead();
+    Script.Include("facebook-connect.js").AtHead();
 
     // Dynamic add shape template and its shape model for Facebook SDK if not exist
     var shapeItems = WorkContext.Layout.AfterBody.Items as IEnumerable<dynamic>;

@@ -6,7 +6,7 @@ namespace Codesanok.FacebookConnect {
         public void Activated() {
             ReactSiteConfiguration.Configuration
                 .SetLoadBabel(false)
-                .AddScriptWithoutTransform("~/modules/codesanook.facebookconnect/scripts/main-bundle.js");
+                .AddScriptWithoutTransform("~/modules/codesanook.facebookconnect/scripts/facebook-connect.js");
         }
 
         public void Terminating() {

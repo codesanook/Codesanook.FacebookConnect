@@ -5,4 +5,5 @@ Website: https://www.codesanook.com
 Version: 0.5
 OrchardVersion: 1.0
 Description: Allow to log in to a website with Facebook account.
-Dependencies: Orchard.Users
+Category: Authentication
+Dependencies: Orchard.Users, Codesanook.Common, CodeSanook.Configuration, Codesanook.ReactJS

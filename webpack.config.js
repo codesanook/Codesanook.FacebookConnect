@@ -3,11 +3,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
-        main: './src/main',
+        'facebook-connect': './src/main'
     },
     output: {
         path: path.resolve(__dirname, 'scripts'),
-        filename: '[name]-bundle.js',
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', 'jsx']
