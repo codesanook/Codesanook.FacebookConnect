@@ -13,12 +13,7 @@
         "strict": false,
         "jsx": "react"
     },
-    "include": [
-        "src/**/*.js",
-        "src/components/FacebookLogIn.tsx"
-    ],
     "exclude": [
-        "node_modules",
-    ],
-    "compileOnSave": false
+        "node_modules"
+    ]
 }

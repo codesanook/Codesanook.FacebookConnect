@@ -2,7 +2,7 @@
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 
-namespace Pluralsight.Movies.Drivers {
+namespace Codesanook.FacebookConnect.Drivers {
     public class FacebookUserPartDriver : ContentPartDriver<FacebookUserPart> {
         protected override string Prefix {
             get { return "FacebookUserPart"; }
