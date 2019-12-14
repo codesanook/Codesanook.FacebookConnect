@@ -22,13 +22,13 @@ namespace Codesanook.FacebookConnect {
                     Route = new Route(
                         "users/account/logon",
                         new RouteValueDictionary {
-                            {"area", "CodeSanook.FacebookConnect"},
+                            {"area", "Codesanook.FacebookConnect"},
                             {"controller", "Facebook"},
                             {"action", "Connect"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "CodeSanook.FacebookConnect"}
+                            {"area", "Codesanook.FacebookConnect"}
                         },
                         new MvcRouteHandler())
                 },
@@ -39,13 +39,13 @@ namespace Codesanook.FacebookConnect {
                     Route = new Route(
                         "facebook/connect",
                         new RouteValueDictionary {
-                            {"area", "CodeSanook.FacebookConnect"},
+                            {"area", "Codesanook.FacebookConnect"},
                             {"controller", "Facebook"},
                             {"action", "Connect"}
                         },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
-                            {"area", "CodeSanook.FacebookConnect"}
+                            {"area", "Codesanook.FacebookConnect"}
                         },
                         new MvcRouteHandler())
                 }

@@ -146,7 +146,6 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\FacebookUserPart.cs" />
     <Compile Include="Models\FacebookUserPartRecord.cs" />
-    <Compile Include="Permissions.cs" />
     <Compile Include="ResourceRegistration.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="ShellEvent.cs" />
@@ -200,9 +199,9 @@
       <Project>{7104e4b7-0fdc-4734-a812-1c6a8f71635d}</Project>
       <Name>Codesanook.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeSanook.Configuration\CodeSanook.Configuration.csproj">
+    <ProjectReference Include="..\Codesanook.Configuration\Codesanook.Configuration.csproj">
       <Project>{55a5af31-438d-4712-b8b6-ee01327842ae}</Project>
-      <Name>CodeSanook.Configuration</Name>
+      <Name>Codesanook.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Codesanook.ReactJS\Codesanook.ReactJS.csproj">
       <Project>{2a3ac19b-d914-4bce-a691-f92f1851a402}</Project>
