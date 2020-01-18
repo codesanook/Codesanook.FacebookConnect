@@ -131,6 +131,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\facebook-connect.js" />
     <Content Include="Styles\facebook-connect-style.css" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
@@ -183,10 +184,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\components\FacebookLogIn.tsx" />
-    <None Include="src\components\index.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
       <Project>{2d1d92bb-4555-4cbe-8d0e-63563d6ce4c6}</Project>
       <Name>Orchard.Framework</Name>
@@ -214,10 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\..\packages\AWSSDK.S3.3.3.8.2\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Api.ts" />
-    <None Include="src\main.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
