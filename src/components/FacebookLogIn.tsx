@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import Api from '../Api';
 // TODO create showIntroLogInModal(); for give more information to user why do we need this information
 import '../scss/style.scss'
@@ -8,8 +8,8 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
         const facebookService = new FacebookService();
         try {
             event.preventDefault();
-            document.getElementById("fb-login").style.display = "none";
-            document.getElementById("loading").style.display = "block";
+            document.getElementById('fb-login').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
             var response = await facebookService.logIn();
             let userInfo = await facebookService.getUserInfo(response);
             await facebookService.connect(userInfo);
@@ -18,8 +18,8 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
 
         } catch (ex) {
             facebookService.handleException(ex);
-            document.getElementById("fb-login").style.display = "block";
-            document.getElementById("loading").style.display = "none";
+            document.getElementById('fb-login').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
         }
     };
 
@@ -28,31 +28,37 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
 
         // Add / prefix to make replace work both with and without / in return URL
         // Expected output is URL has / prefix
-        return `/${returnUrl}`.replace(/\/+/, "/");
+        return `/${returnUrl}`.replace(/\/+/, '/');
     };
 
+
     return (
-        <div className="container-facebook">
-            <div id="fb-login">
-                <p className="head-text">Log in to Codesanook</p>
-                <a className="btn-fb-login" onClick={handleOnClick}>
-                    <i className="fa fa-facebook-official" aria-hidden="true"></i>
-                    Log In with Facebook
-                </a>
-                <div className="body-text">
-                    <p>เราจำเป็นต้องให้คุณ log in ด้วย facebook เนื่องจาก</p>
-                    <p>codesanook.com ต้องการให้คุณใช้งานได้ง่าย</p>
-                    <p>ลดขั้นตอนการลงทะเบียนที่ต้องกรอกข้อมูลต่างๆ</p>
-                    <p>เราเพียงต้องการข้อมูลเหล่านี้จาก Facebook ของคุณเท่านี้</p>
-                    <p>- ชื่อ</p>
-                    <p>- อีเมล์</p>
+        <div className='modal-login'>
+            <div className='container-facebook'>
+                <div id='fb-login'>
+                    <p className='head-text'>Log in to Codesanook</p>
+                    <a className='btn-fb-login' onClick={handleOnClick}>
+                        <i className='fa fa-facebook-official' aria-hidden='true'></i>
+                        Log In with Facebook
+                    </a>
+                    <div className='body-text'>
+                        <p>เราจำเป็นต้องให้คุณ log in ด้วย facebook เนื่องจาก</p>
+                        <p>codesanook.com ต้องการให้คุณใช้งานได้ง่าย</p>
+                        <p>ลดขั้นตอนการลงทะเบียนที่ต้องกรอกข้อมูลต่างๆ</p>
+                        <p>เราเพียงต้องการข้อมูลเหล่านี้จาก Facebook ของคุณเท่านี้</p>
+                        <p>- ชื่อ</p>
+                        <p>- อีเมล์</p>
+                    </div>
+                    <div className='footer'>
+                        <a className='btn-back' href='/'>Back to home</a>
+                    </div>
                 </div>
-            </div>
-            <div id="loading" >
-                <p>Logging in...</p>
-                <div className="spinner">
-                    <div className="double-bounce1"></div>
-                    <div className="double-bounce2"></div>
+                <div id='loading' >
+                    <p>Logging in...</p>
+                    <div className='spinner'>
+                        <div className='double-bounce1'></div>
+                        <div className='double-bounce2'></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,7 +90,7 @@ class FbScope {
     public scope: string;
 
     constructor(private requiredPermissions: string[]) {
-        this.scope = requiredPermissions.join(",");
+        this.scope = requiredPermissions.join(',');
     }
 
     validateHasAllRequiredPermissions(grantedPermissions: string): void {
@@ -100,7 +106,7 @@ class FbScope {
 }
 
 class FacebookService {
-    private readonly fbScope: FbScope = new FbScope(["email", "public_profile"]);
+    private readonly fbScope: FbScope = new FbScope(['email', 'public_profile']);
 
     logIn(): Promise<any> {
         let promise = new Promise<void>((resolve, reject) => {
@@ -117,7 +123,7 @@ class FacebookService {
                     } else {
                         // The person is not logged into Facebook, so we're not sure if
                         // they are logged into this app or not.
-                        reject("user not logged into Facebook");
+                        reject('user not logged into Facebook');
                     }
 
                 } catch (ex) {
@@ -150,7 +156,7 @@ class FacebookService {
                     //useful properties that can get from response
                     //response.authResponse.userID,
                     //response.authResponse.accessToken
-                    console.log("get log in status \n%o\n", response);
+                    console.log('get log in status \n%o\n', response);
                     resolve(response);
 
                 } catch (ex) {
@@ -166,7 +172,7 @@ class FacebookService {
         let promise = new Promise<any>((resolve, reject) => {
             const authResponse = response.authResponse;
             const grantedScopes = response.authResponse.grantedScopes;
-            console.log("grantedScopes \n%o\n", grantedScopes);
+            console.log('grantedScopes \n%o\n', grantedScopes);
             const graphApiUrl = `/${authResponse.userID}?fields=picture.width(540).height(540),id,first_name,last_name,email`;
 
             FB.api(graphApiUrl, response => {
@@ -190,19 +196,19 @@ class FacebookService {
     }
 
     async connect(user: any): Promise<any> {
-        const url = "/facebook/connect";// URL is from custom route
+        const url = '/facebook/connect';// URL is from custom route
         return Api.post<any>(url, user);
     }
 
     async handleException(response: any): Promise<void> {
         if (!(response instanceof MissingFacebookPermissionException)) {
-            alert("Error, please retry log in again");
+            alert('Error, please retry log in again');
             return;
         }
 
         var ex = response as MissingFacebookPermissionException;
         await this.removeApp();
-        alert(`Error, please allow "${ex.missingPermission}" permission`);
+        alert(`Error, please allow '${ex.missingPermission}' permission`);
     };
 
     // User can start log in again without any permission issue
@@ -210,7 +216,7 @@ class FacebookService {
         let promise = new Promise<void>((resolve, reject) => {
             FB.api('/me/permissions', 'delete', (response: any) => {
                 try {
-                    console.log("remove app response \n%o\n", response);
+                    console.log('remove app response \n%o\n', response);
                     resolve();
                 } catch (ex) {
                     reject(ex);
