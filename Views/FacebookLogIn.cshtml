@@ -16,6 +16,14 @@
         var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
         WorkContext.Layout.AfterBody.Add(New.FacebookSdk(Setting: setting), "1");
     }
+    var siteName = WorkContext.CurrentSite.SiteName;
 }
 
-@Html.React("CodesanookFacebookConnect.FacebookLogIn", new { returnUrlRelativeToRoot = Request.QueryString["returnUrl"] })
+@Html.React(
+    "CodesanookFacebookConnect.FacebookLogIn",
+    new
+    {
+        siteName = siteName,
+        returnUrlRelativeToRoot = Request.QueryString["returnUrl"]
+    }
+)

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Api from '../Api';
-// TODO create showIntroLogInModal(); for give more information to user why do we need this information
-import '../scss/style.scss'
+import '../scss/style.scss';
 
 const FacebookLogIn: React.FunctionComponent<IProps> = props => {
     const handleOnClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -31,21 +30,19 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
         return `/${returnUrl}`.replace(/\/+/, '/');
     };
 
-
     return (
         <div className='modal-login'>
             <div className='container-facebook'>
                 <div id='fb-login'>
-                    <p className='head-text'>Log in to Codesanook</p>
+                    <p className='head-text'>Log in to {props.siteName}</p>
                     <a className='btn-fb-login' onClick={handleOnClick}>
                         <i className='fa fa-facebook-official' aria-hidden='true'></i>
-                        Log In with Facebook
+                        Log in with Facebook
                     </a>
                     <div className='body-text'>
-                        <p>เราจำเป็นต้องให้คุณ log in ด้วย facebook เนื่องจาก</p>
-                        <p>เราต้องการให้คุณได้รับความสะดวกในการใช้งาน codesanook.com</p>
-                        <p>โดยไม่ต้องกรอกข้อมูลต่างๆ ในการลงทะเบียน</p>
-                        <p>เราต้องการข้อมูลเหล่านี้จาก Facebook ของคุณเท่านั้น</p>
+                        <p>เพื่อความสะดวกในการใช้งาน {props.siteName}</p>
+                        <p>และลดขั้นตอนการกรอกข้อมูลต่างๆ ในการลงทะเบียน</p>
+                        <p>เราจำเป็นต้องขอข้อมูลเหล่านี้จากการ Log in ด้วย Facebook ของคุณ</p>
                         <p>- ชื่อ</p>
                         <p>- อีเมล์</p>
                     </div>
@@ -66,6 +63,7 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
 };
 
 interface IProps {
+    siteName: string;
     returnUrlRelativeToRoot?: string;
 }
 
@@ -230,3 +228,4 @@ class FacebookService {
 }
 
 export default FacebookLogIn;
+
