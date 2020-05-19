@@ -1,6 +1,7 @@
 import * as React from "react";
 import Api from '../Api';
 // TODO create showIntroLogInModal(); for give more information to user why do we need this information
+import '../scss/style.scss'
 
 const FacebookLogIn: React.FunctionComponent<IProps> = props => {
     const handleOnClick = async (event: React.MouseEvent<HTMLAnchorElement>) => {

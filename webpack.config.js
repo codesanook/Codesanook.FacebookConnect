@@ -62,7 +62,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "./../styles/style.css",
+            filename: "./../styles/facebook-connect-style.css",
         })
     ],
     externals: {

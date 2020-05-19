@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\facebook-connect.js" />
-    <Content Include="Styles\facebook-connect-style.css" />
     <Content Include="Scripts\Web.config" />
     <Content Include="Styles\Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
@@ -165,7 +164,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="Views\FacebookLogIn.cshtml" />
-    <Content Include="Scss\hello.scss" />
     <Content Include="Views\Parts\FacebookUser.cshtml" />
     <Content Include="Views\EditorTemplates\Parts\FacebookUser.cshtml" />
     <Content Include="tslint.json" />
@@ -212,6 +210,7 @@
   <ItemGroup>
     <Analyzer Include="..\..\..\packages\AWSSDK.S3.3.3.8.2\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
