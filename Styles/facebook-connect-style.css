@@ -1,1 +1,113 @@
-﻿
+﻿.col-md-8 {
+    flex: 1 !important;
+    max-width: 100% !important;
+}
+
+.col-md-4 {
+    display: none;
+}
+
+.container-facebook {
+    position: relative;
+    display: block;
+    background-color: #fff;
+    padding: 15px 25px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #707070;
+    text-align: center;
+    width: 50%;
+}
+
+.container-facebook p.head-text {
+    font-size: 1.5rem;
+}
+
+.container-facebook .btn-fb-login {
+    margin: 15px 0;
+    padding: 5px 15px;
+    background-color: #4267b2;
+    border-radius: 4px;
+    color: #fff;
+
+}
+
+.container-facebook .btn-fb-login .fa {
+    margin-right: 5px;
+}
+
+.container-facebook .btn-fb-login:hover {
+    background-color: #4267b2;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-facebook .body-text {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.container-facebook .body-text p {
+    margin-bottom: 0;
+}
+
+#loading {
+    display: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 100px auto;
+}
+
+.double-bounce1,
+.double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+
+    0%,
+    100% {
+        -webkit-transform: scale(0.0)
+    }
+
+    50% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes sk-bounce {
+
+    0%,
+    100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    }
+
+    50% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}

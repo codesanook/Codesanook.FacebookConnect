@@ -2,9 +2,11 @@
 @using Codesanook.Configuration.Models
 
 @{
+    Style.Require("FontAwesome");
     Script.Require("React").AtHead();
     Script.Require("ReactDOM").AtHead();
     Script.Include("facebook-connect.js").AtHead();
+    Style.Include("facebook-connect-style.css").AtHead();
 
     // Dynamic add shape template and its shape model for Facebook SDK if not exist
     var shapeItems = WorkContext.Layout.AfterBody.Items as IEnumerable<dynamic>;

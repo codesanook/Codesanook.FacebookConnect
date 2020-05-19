@@ -7,12 +7,18 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
         const facebookService = new FacebookService();
         try {
             event.preventDefault();
+            document.getElementById("fb-login").style.display = "none";
+            document.getElementById("loading").style.display = "block";
             var response = await facebookService.logIn();
             let userInfo = await facebookService.getUserInfo(response);
             await facebookService.connect(userInfo);
+
             location.href = safeUrlRelativeToRoot(props.returnUrlRelativeToRoot);
+
         } catch (ex) {
             facebookService.handleException(ex);
+            document.getElementById("fb-login").style.display = "block";
+            document.getElementById("loading").style.display = "none";
         }
     };
 
@@ -25,8 +31,29 @@ const FacebookLogIn: React.FunctionComponent<IProps> = props => {
     };
 
     return (
-        <div>
-            <a onClick={handleOnClick}>Log In with Facebook</a>
+        <div className="container-facebook">
+            <div id="fb-login">
+                <p className="head-text">Log in to Codesanook</p>
+                <a className="btn-fb-login" onClick={handleOnClick}>
+                    <i className="fa fa-facebook-official" aria-hidden="true"></i>
+                    Log In with Facebook
+                </a>
+                <div className="body-text">
+                    <p>เราจำเป็นต้องให้คุณ log in ด้วย facebook เนื่องจาก</p>
+                    <p>codesanook.com ต้องการให้คุณใช้งานได้ง่าย</p>
+                    <p>ลดขั้นตอนการลงทะเบียนที่ต้องกรอกข้อมูลต่างๆ</p>
+                    <p>เราเพียงต้องการข้อมูลเหล่านี้จาก Facebook ของคุณเท่านี้</p>
+                    <p>- ชื่อ</p>
+                    <p>- อีเมล์</p>
+                </div>
+            </div>
+            <div id="loading" >
+                <p>Logging in...</p>
+                <div className="spinner">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
+                </div>
+            </div>
         </div>
     );
 };
