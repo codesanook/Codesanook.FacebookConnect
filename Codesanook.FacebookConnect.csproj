@@ -191,13 +191,13 @@
       <Project>{9916839c-39fc-4ceb-a5af-89ca7e87119f}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Codesanook.AmazonS3\Codesanook.AmazonS3.csproj">
+      <Project>{F7A05B63-9397-4C6A-B625-EDD5D0D55675}</Project>
+      <Name>Codesanook.AmazonS3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Codesanook.Common\Codesanook.Common.csproj">
       <Project>{7104e4b7-0fdc-4734-a812-1c6a8f71635d}</Project>
       <Name>Codesanook.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Codesanook.Configuration\Codesanook.Configuration.csproj">
-      <Project>{55a5af31-438d-4712-b8b6-ee01327842ae}</Project>
-      <Name>Codesanook.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Codesanook.ReactJS\Codesanook.ReactJS.csproj">
       <Project>{2a3ac19b-d914-4bce-a691-f92f1851a402}</Project>

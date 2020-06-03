@@ -20,8 +20,9 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using System.Threading.Tasks;
 using Codesanook.FacebookConnect.Models;
-using Codesanook.Configuration.Models;
 using url = Flurl.Url;
+using Codesanook.Common.Models;
+using Codesanook.AmazonS3.Models;
 
 namespace Codesanook.FacebookConnect.Controllers {
     [HandleError, Themed, AlwaysAccessible]
@@ -30,8 +31,9 @@ namespace Codesanook.FacebookConnect.Controllers {
         private readonly IAuthenticationService auth;
         private readonly IMembershipService membershipService;
         private readonly IUserEventHandler userEventHandler;
-        private ModuleSettingPart settings;
-        private IContentManager contentManager;
+        private readonly AwsS3SettingPart awsS3SettingPart;
+        private readonly CommonSettingPart commonSettingPart;
+        private readonly IContentManager contentManager;
 
         //property injection
         public ILogger Logger { get; set; }
@@ -53,7 +55,8 @@ namespace Codesanook.FacebookConnect.Controllers {
             T = NullLocalizer.Instance;
 
             // Acquire Facebook settings
-            settings = orchardService.WorkContext.CurrentSite.As<ModuleSettingPart>();
+            awsS3SettingPart = orchardService.WorkContext.CurrentSite.As<AwsS3SettingPart>();
+            commonSettingPart = orchardService.WorkContext.CurrentSite.As<CommonSettingPart>();
         }
 
         public ActionResult Connect(string returnUrl) {
@@ -113,8 +116,6 @@ namespace Codesanook.FacebookConnect.Controllers {
         }
 
         private async Task<IUser> UpdateFacebookUserPart(FacebookLogInRequest request, IUser user) {
-            var newUser = contentManager.New("User");
-            var part = newUser.As<FacebookUserPart>();
 
             // Update UserPart  
             var userPart = user.ContentItem.As<UserPart>();
@@ -177,12 +178,12 @@ namespace Codesanook.FacebookConnect.Controllers {
             }
 
             using (var client = new AmazonS3Client(
-                settings.AwsAccessKey,
-                settings.AwsSecretKey,
+                commonSettingPart.AwsAccessKey,
+                commonSettingPart.AwsSecretKey,
                 Amazon.RegionEndpoint.APSoutheast1))
             using (memoryStream) {
                 var putRequest = new PutObjectRequest {
-                    BucketName = settings.AwsS3BucketName,
+                    BucketName = awsS3SettingPart.AwsS3BucketName,
                     InputStream = memoryStream,
                     StorageClass = S3StorageClass.ReducedRedundancy,
                     //todo dynamic content type
@@ -195,8 +196,8 @@ namespace Codesanook.FacebookConnect.Controllers {
 
                 await client.PutObjectAsync(putRequest);
                 return url.Combine(
-                    settings.AwsS3PublicUrl,
-                    settings.AwsS3BucketName,
+                    awsS3SettingPart.AwsS3PublicUrl,
+                    awsS3SettingPart.AwsS3BucketName,
                     fileFullName);
             }
         }

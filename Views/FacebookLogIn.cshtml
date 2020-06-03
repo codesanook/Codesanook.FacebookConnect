@@ -1,5 +1,5 @@
 ﻿@using Orchard.ContentManagement
-@using Codesanook.Configuration.Models
+@using Codesanook.Common.Models
 
 @{
     Style.Require("FontAwesome");
@@ -13,7 +13,7 @@
     var doesSdkShapeExist = shapeItems.Any(item => item.Metadata.Type == "FacebookSdk");
     if (!doesSdkShapeExist)
     {
-        var setting = WorkContext.CurrentSite.As<ModuleSettingPart>();
+        var setting = WorkContext.CurrentSite.As<CommonSettingPart>();
         WorkContext.Layout.AfterBody.Add(New.FacebookSdk(Setting: setting), "1");
     }
     var siteName = WorkContext.CurrentSite.SiteName;
