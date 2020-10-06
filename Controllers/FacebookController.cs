@@ -196,7 +196,7 @@ namespace Codesanook.FacebookConnect.Controllers {
 
                 await client.PutObjectAsync(putRequest);
                 return url.Combine(
-                    awsS3SettingPart.AwsS3PublicUrl,
+                    awsS3SettingPart.AwsS3ServiceUrl,
                     awsS3SettingPart.AwsS3BucketName,
                     fileFullName);
             }
